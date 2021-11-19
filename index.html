@@ -5,17 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <div>
+    <h1>test-task "TIMER"</h1>
+    <div class="timer">
         <p class="hours" data-value="hours"> 00: </p>
         <p class="min" data-value="mins"> 00: </p>
         <p class="sec" data-value="secs"> 00 </p>
     </div>
     <div>
-        <button id="start">Start/Stop</button>
-        <button id="wait">Wait</button>
-        <button id="reset">Reset</button>
+        <button id="start"><span class="text-btn">Start/Stop</span></button>
+        <button id="wait"><span class="text-btn">Wait</span></button>
+        <button id="reset"><span class="text-btn">Reset</span></button>
     </div>
+    <script src="./timer.js" ></script>
 </body>
 </html>
