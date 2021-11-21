@@ -1,56 +1,49 @@
 
 const refs = {
-    hours: document.querySelector('[data-value="hours"]'),
-    min: document.querySelector('[data-value="mins"]'),
-    sec: document.querySelector('[data-value="secs"]'),
+    timer: document.querySelector('[data-value="timer-view"]'),
     start: document.getElementById('start'),
     wait: document.getElementById('wait'),
     reset: document.getElementById('reset'),
 }
 
-console.log(refs.start);
 let hours = 0;
 let min = 0;
 let sec = 0;
 let interval = null;
 let counter = 0;
 
-console.log(refs.wait);
-function count() {
-    sec = sec + 1;
-    if (sec < 9) {
-        refs.sec.innerHTML = '0' + sec;
-    }
-    if (sec > 9 && sec < 60) {
-        refs.sec.innerText = sec;
-    }
-    if (sec > 59) {
-        min = min + 1;
-        sec = 0;
-        // refs.hours.innerText = hours + "0:";
-        refs.min.innerText = '0' + min + ':';
-        refs.sec.innerText = sec + '0';
-    }
 
-    if (min > 9 && min < 60) {
-        // refs.hours.innerText = hours + "0:";
-        refs.min.innerText = min + ':';
-        // refs.sec.innerText = sec + '0:';
+function render() {
+    let hoursString = hours < 10 ? '0' + hours : hours;
+    let minString = min < 10 ? '0' + min : min;
+    let secString = sec < 10 ? '0' + sec : sec;
+    let timer = hoursString + ':' + minString + ':' + secString;
+    refs.timer.innerHTML = timer;
+}
+
+function calculateNextTimerValues() {
+    sec = sec + 1;
+    if (sec > 59) {
+        sec = 0;
+        min++;
     }
 
     if (min > 59) {
-        hours = hours + 1;
         min = 0;
-        sec = 0;
-        refs.hours.innerText = '0' + hours + ":";
-        refs.min.innerText = min + '0:';
-        // refs.sec.innerText = sec + '0:';
+        hours++;
     }
+
+}
+
+function onSecondChange() {
+
+    calculateNextTimerValues();
+    render();
 
 };
 
 refs.start.onclick = function () {
-    interval = setInterval(count, 2);
+    interval = setInterval(onSecondChange, 1000);
     refs.start.disabled = true;
 }
 
@@ -74,8 +67,9 @@ refs.wait.onclick = function () {
 
 refs.reset.onclick = function () {
     clearInterval(interval);
-    refs.hours.innerText = '00:';
-    refs.min.innerText = '00:';
-    refs.sec.innerText = '00';
+    refs.timer.innerHTML = '00:00:00';
     refs.start.disabled = false;
+    hours = 0;
+    min = 0;
+    sec = 0;
 }
